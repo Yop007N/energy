@@ -1,0 +1,36 @@
+1. **Obtener todos los medidores (`GET /medidores`):**
+   - Método: GET
+   - URL: `http://localhost:8004/medidores`
+
+2. **Obtener un medidor por ID (`GET /medidores/{id}`):**
+   - Método: GET
+   - URL: `http://localhost:8004/medidores/{id}` (reemplaza `{id}` con el ID real de un medidor)
+
+3. **Crear un nuevo medidor (`POST /medidores`):**
+   - Método: POST
+   - URL: `http://localhost:8004/medidores`
+   - Body (raw JSON): 
+     ```json
+     {
+       "numeroMedidor": "12345",
+       "tipoMedidor": "TipoEjemplo",
+       "idContrato": 1
+     }
+     ```
+
+4. **Actualizar un medidor existente (`PUT /medidores/{id}`):**
+   - Método: PUT
+   - URL: `http://localhost:8004/medidores/{id}` (reemplaza `{id}` con el ID real de un medidor)
+   - Body (raw JSON): 
+     ```json
+     {
+       "numeroMedidor": "NuevoNumero",
+       "tipoMedidor": "NuevoTipo",
+       "idContrato": 2
+     }
+     ```
+
+5. **Eliminar un medidor (`DELETE /medidores/{id}`):**
+   - Método: DELETE
+   - URL: `http://localhost:8004/medidores/{id}` (reemplaza `{id}` con el ID real de un medidor)
+

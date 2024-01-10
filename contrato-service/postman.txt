@@ -1,0 +1,36 @@
+
+
+1. **Obtener todos los contratos (GET /contratos):**
+   - Método: GET
+   - URL: `http://localhost:8003/contratos`
+
+2. **Obtener información de un contrato por ID (GET /contratos/{id}):**
+   - Método: GET
+   - URL: `http://localhost:8003/contratos/{id}`
+   - Reemplaza `{id}` con el ID real de un contrato existente.
+
+3. **Crear un nuevo contrato (POST /contratos):**
+   - Método: POST
+   - URL: `http://localhost:8003/contratos`
+   - Cuerpo (en formato JSON):
+     ```json
+     {
+       "numeroContrato": "CT001",
+       "titularContrato": "Juan Pérez",
+       "direccionSuministro": "Calle A #123",
+       "cicloFacturacion": "Mensual",
+       "idCliente": 1
+     }
+     ```
+
+4. **Actualizar la información de un contrato (PUT /contratos/{id}):**
+   - Método: PUT
+   - URL: `http://localhost:8003/contratos/{id}`
+   - Reemplaza `{id}` con el ID real de un contrato existente.
+   - Cuerpo (en formato JSON) con los campos que deseas actualizar.
+
+5. **Eliminar un contrato (DELETE /contratos/{id}):**
+   - Método: DELETE
+   - URL: `http://localhost:8003/contratos/{id}`
+   - Reemplaza `{id}` con el ID real de un contrato existente.
+

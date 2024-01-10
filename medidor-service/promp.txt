@@ -1,0 +1,3 @@
+promp clases
+
+Genera el código de una clase Java llamada Usuario utilizando Lombok y anotaciones. La clase debe tener al menos 5 atributos con tipos de datos variados y anotaciones de validación. Asegúrate de incluir constructores, getters y setters. Además, especifica cualquier validación necesaria en los campos, como longitud de cadenas o restricciones numéricas. Proporciona comentarios para indicar cualquier consideración especial. Ejemplo:
