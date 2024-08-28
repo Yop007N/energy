@@ -45,3 +45,63 @@ Este proyecto `energy` es un sistema de gestión de energía desarrollado con Sp
    cd cliente-service
    mvn spring-boot:run
    ```
+
+
+## Endpoints del Servicio de Clientes
+
+### Obtener todos los clientes (GET /clientes):
+
+- **Método:** GET
+- **URL:** `http://localhost:8002/clientes`
+- **Headers:** No es necesario.
+- **Body:** No es necesario.
+
+### Obtener un cliente por ID (GET /clientes/{id}):
+
+- **Método:** GET
+- **URL:** `http://localhost:8002/clientes/{id}`
+- **Headers:** No es necesario.
+- **Body:** No es necesario.
+
+### Crear un nuevo cliente (POST /clientes):
+
+- **Método:** POST
+- **URL:** `http://localhost:8002/clientes`
+- **Headers:**
+  - `Content-Type: application/json`
+- **Body:**
+  ```json
+  {
+    "rucCi": "123456789",
+    "nombre": "Nombre del Cliente",
+    "direccion": "Dirección del Cliente",
+    "tipoCliente": "RESIDENCIAL"
+  }
+  ```
+
+### Actualizar un cliente existente (PUT /clientes/{id}):
+
+- **Método:** PUT
+- **URL:** `http://localhost:8002/clientes/{id}`
+- **Headers:**
+  - `Content-Type: application/json`
+- **Body:**
+  ```json
+  {
+    "rucCi": "987654321",
+    "nombre": "Nuevo Nombre del Cliente",
+    "direccion": "Nueva Dirección del Cliente",
+    "tipoCliente": "COMERCIAL"
+  }
+  ```
+
+### Eliminar un cliente (DELETE /clientes/{id}):
+
+- **Método:** DELETE
+- **URL:** `http://localhost:8002/clientes/{id}`
+- **Headers:** No es necesario.
+- **Body:** No es necesario.
+
+
+
+   
