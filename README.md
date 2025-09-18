@@ -1,107 +1,286 @@
-```markdown
-# Energy
+# Energy Management Platform ⚡
 
-Este proyecto `energy` es un sistema de gestión de energía desarrollado con Spring Boot. El proyecto está estructurado en múltiples módulos que representan diferentes servicios dentro del sistema.
+> Sistema completo de gestión energética desarrollado con Spring Boot y arquitectura de microservicios
 
-## Módulos del Proyecto
+## 📋 Descripción
 
-- **cliente-service**: Módulo responsable de la gestión de los clientes.
-- **consumo-service**: Módulo para el manejo de datos de consumo energético.
-- **contrato-service**: Servicio para la administración de contratos de energía.
-- **detalle-facturacion-service**: Módulo que gestiona los detalles de la facturación.
-- **region-service**: Servicio para la gestión de las regiones donde se suministra energía.
-- **medidor-service**: Módulo que administra los medidores de energía.
-- **facturacion-service**: Servicio encargado de la generación y gestión de facturas.
-- **potencia-service**: Módulo que gestiona la potencia energética contratada.
+Energy Management Platform es un sistema robusto de gestión energética que permite administrar clientes, contratos, facturación, y monitoreo de consumo eléctrico. El proyecto está construido con arquitectura de microservicios para garantizar escalabilidad y mantenibilidad.
 
-## Tecnologías Utilizadas
+## 🏗️ Arquitectura de Microservicios
 
-- **Spring Boot**: Versión 3.2.1
-- **Java**: Versión 17
-- **Maven**: Para la gestión de dependencias y construcción del proyecto.
+### 📊 Servicios Disponibles
 
-## Requisitos
+| Servicio | Puerto | Descripción |
+|----------|--------|-------------|
+| **cliente-service** | 8002 | Gestión de clientes y tipos de usuario |
+| **consumo-service** | 8003 | Monitoreo y análisis de consumo energético |
+| **contrato-service** | 8004 | Administración de contratos de energía |
+| **detalle-facturacion-service** | 8005 | Gestión de detalles de facturación |
+| **facturacion-service** | 8006 | Generación y procesamiento de facturas |
+| **medidor-service** | 8007 | Administración de medidores inteligentes |
+| **potencia-service** | 8008 | Gestión de potencia contratada |
+| **region-service** | 8009 | Administración de regiones de suministro |
 
-- **Java 17** o superior
-- **Maven 3.8** o superior
+## 🛠️ Stack Tecnológico
 
-## Instalación y Configuración
+### Backend
+- **Spring Boot 3.2.1** - Framework principal
+- **Java 17** - Lenguaje de programación
+- **Maven** - Gestión de dependencias
+- **Spring Data JPA** - Persistencia de datos
+- **Spring Web** - APIs RESTful
 
-1. **Clonar el repositorio**:
-   ```bash
-   git clone 
-   cd energy
-   ```
+### Base de Datos
+- **H2 Database** (desarrollo)
+- **PostgreSQL** (producción recomendada)
+- **MySQL** (compatible)
 
-2. **Construir el proyecto**:
-   Ejecuta el siguiente comando para construir todos los módulos:
-   ```bash
-   mvn clean install
-   ```
+### Herramientas
+- **Spring Boot DevTools** - Desarrollo rápido
+- **Lombok** - Reducción de código boilerplate
+- **MapStruct** - Mapeo de objetos
 
-3. **Ejecutar un módulo específico**:
-   Para ejecutar un módulo en particular, por ejemplo `cliente-service`:
-   ```bash
-   cd cliente-service
-   mvn spring-boot:run
-   ```
+## 🚀 Instalación y Configuración
 
+### Prerrequisitos
+- Java 17 o superior
+- Maven 3.8 o superior
+- Git
 
-## Endpoints del Servicio de Clientes
+### Instalación
 
-### Obtener todos los clientes (GET /clientes):
+```bash
+# Clonar el repositorio
+git clone https://github.com/Yop007N/energy.git
+cd energy
 
-- **Método:** GET
-- **URL:** `http://localhost:8002/clientes`
-- **Headers:** No es necesario.
-- **Body:** No es necesario.
+# Construir todos los microservicios
+mvn clean install
 
-### Obtener un cliente por ID (GET /clientes/{id}):
+# Ejecutar todos los servicios (en terminales separadas)
+./start-all-services.sh
+```
 
-- **Método:** GET
-- **URL:** `http://localhost:8002/clientes/{id}`
-- **Headers:** No es necesario.
-- **Body:** No es necesario.
+### Ejecución Individual de Servicios
 
-### Crear un nuevo cliente (POST /clientes):
+```bash
+# Cliente Service
+cd cliente-service && mvn spring-boot:run
 
-- **Método:** POST
-- **URL:** `http://localhost:8002/clientes`
-- **Headers:**
-  - `Content-Type: application/json`
-- **Body:**
-  ```json
-  {
-    "rucCi": "123456789",
-    "nombre": "Nombre del Cliente",
-    "direccion": "Dirección del Cliente",
-    "tipoCliente": "RESIDENCIAL"
-  }
-  ```
+# Consumo Service
+cd consumo-service && mvn spring-boot:run
 
-### Actualizar un cliente existente (PUT /clientes/{id}):
+# Otros servicios...
+cd [nombre-servicio] && mvn spring-boot:run
+```
 
-- **Método:** PUT
-- **URL:** `http://localhost:8002/clientes/{id}`
-- **Headers:**
-  - `Content-Type: application/json`
-- **Body:**
-  ```json
-  {
-    "rucCi": "987654321",
-    "nombre": "Nuevo Nombre del Cliente",
-    "direccion": "Nueva Dirección del Cliente",
-    "tipoCliente": "COMERCIAL"
-  }
-  ```
+## 📡 API Endpoints
 
-### Eliminar un cliente (DELETE /clientes/{id}):
+### 👥 Cliente Service (Puerto 8002)
 
-- **Método:** DELETE
-- **URL:** `http://localhost:8002/clientes/{id}`
-- **Headers:** No es necesario.
-- **Body:** No es necesario.
+```http
+GET    /clientes           # Obtener todos los clientes
+GET    /clientes/{id}      # Obtener cliente por ID
+POST   /clientes           # Crear nuevo cliente
+PUT    /clientes/{id}      # Actualizar cliente
+DELETE /clientes/{id}      # Eliminar cliente
+```
 
+#### Ejemplo de Cliente
+```json
+{
+  "rucCi": "12345678-9",
+  "nombre": "Juan Pérez",
+  "direccion": "Av. Principal 123",
+  "tipoCliente": "RESIDENCIAL"
+}
+```
 
+### ⚡ Consumo Service (Puerto 8003)
 
-   
+```http
+GET    /consumos                    # Obtener consumos
+GET    /consumos/cliente/{id}       # Consumos por cliente
+POST   /consumos                    # Registrar consumo
+GET    /consumos/periodo/{periodo}  # Consumos por período
+```
+
+### 📋 Contrato Service (Puerto 8004)
+
+```http
+GET    /contratos              # Listar contratos
+POST   /contratos              # Crear contrato
+PUT    /contratos/{id}         # Actualizar contrato
+DELETE /contratos/{id}         # Cancelar contrato
+```
+
+### 📊 Facturación Service (Puerto 8006)
+
+```http
+GET    /facturas               # Obtener facturas
+POST   /facturas/generar       # Generar nueva factura
+GET    /facturas/cliente/{id}  # Facturas por cliente
+PUT    /facturas/{id}/pagar    # Marcar como pagada
+```
+
+## 🔧 Configuración
+
+### Variables de Entorno
+
+```bash
+# Base de datos
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=energy_db
+DB_USER=energy_user
+DB_PASSWORD=energy_pass
+
+# Configuración de servicios
+SERVER_PORT=8002
+EUREKA_URL=http://localhost:8761
+```
+
+### application.yml (Ejemplo)
+
+```yaml
+spring:
+  application:
+    name: cliente-service
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+server:
+  port: 8002
+
+logging:
+  level:
+    com.energy: DEBUG
+```
+
+## 🏗️ Estructura del Proyecto
+
+```
+energy/
+├── cliente-service/
+│   ├── src/main/java/
+│   │   ├── controller/    # Controladores REST
+│   │   ├── service/       # Lógica de negocio
+│   │   ├── repository/    # Acceso a datos
+│   │   ├── model/         # Entidades JPA
+│   │   └── dto/           # Objetos de transferencia
+│   └── pom.xml
+├── consumo-service/
+├── contrato-service/
+├── facturacion-service/
+├── medidor-service/
+├── potencia-service/
+├── region-service/
+├── detalle-facturacion-service/
+└── pom.xml                # POM padre
+```
+
+## 🔄 Flujo de Trabajo
+
+1. **Registro de Cliente** → Cliente Service
+2. **Creación de Contrato** → Contrato Service
+3. **Instalación de Medidor** → Medidor Service
+4. **Registro de Consumo** → Consumo Service
+5. **Generación de Factura** → Facturación Service
+6. **Procesamiento de Pago** → Detalle Facturación Service
+
+## 📊 Características Principales
+
+### ✨ Funcionalidades
+
+- **🏠 Gestión de Clientes**: CRUD completo con tipos de cliente
+- **📄 Contratos Inteligentes**: Administración automatizada de contratos
+- **⚡ Monitoreo en Tiempo Real**: Seguimiento de consumo energético
+- **🧾 Facturación Automática**: Generación y envío de facturas
+- **📍 Gestión Regional**: Administración por zonas geográficas
+- **🔌 Control de Medidores**: Gestión de dispositivos IoT
+- **💪 Análisis de Potencia**: Optimización de potencia contratada
+
+### 🎯 Ventajas del Sistema
+
+- **Escalabilidad**: Arquitectura de microservicios
+- **Mantenibilidad**: Separación clara de responsabilidades
+- **Flexibilidad**: Fácil integración de nuevos servicios
+- **Eficiencia**: Optimización de recursos energéticos
+
+## 🧪 Testing
+
+```bash
+# Ejecutar tests
+mvn test
+
+# Tests de integración
+mvn integration-test
+
+# Cobertura de código
+mvn jacoco:report
+```
+
+## 🌐 Despliegue
+
+### Docker (Recomendado)
+
+```bash
+# Construir imágenes
+docker-compose build
+
+# Ejecutar todos los servicios
+docker-compose up -d
+
+# Ver logs
+docker-compose logs -f
+```
+
+### Kubernetes
+
+```bash
+# Aplicar configuraciones
+kubectl apply -f k8s/
+
+# Verificar deployments
+kubectl get pods
+```
+
+## 📈 Monitoreo
+
+- **Spring Boot Actuator** - Health checks y métricas
+- **Prometheus** - Recolección de métricas
+- **Grafana** - Visualización de datos
+- **ELK Stack** - Logs centralizados
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crea tu branch (`git checkout -b feature/NuevaFuncionalidad`)
+3. Commit tus cambios (`git commit -m 'Add: Nueva funcionalidad'`)
+4. Push al branch (`git push origin feature/NuevaFuncionalidad`)
+5. Abre un Pull Request
+
+## 📝 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
+
+## 👨‍💻 Autor
+
+**Enrique B. (Yop007N)**
+- GitHub: [@Yop007N](https://github.com/Yop007N)
+- Especialización: IoT y Eficiencia Energética
+
+## 🔗 Enlaces Relacionados
+
+- [Spring Boot Documentation](https://spring.io/projects/spring-boot)
+- [Java 17 Documentation](https://docs.oracle.com/en/java/javase/17/)
+- [Maven Documentation](https://maven.apache.org/guides/)
+
+---
+
+⚡ Construyendo el futuro de la gestión energética inteligente
