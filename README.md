@@ -1,146 +1,194 @@
-# Energy Management Platform ⚡
+# 🏗️ Microservices Energy Platform
 
-> Sistema completo de gestión energética desarrollado con Spring Boot y arquitectura de microservicios
+> **Plataforma de microservicios para gestión energética empresarial con Clean Architecture**
 
 ## 📋 Descripción
 
-Energy Management Platform es un sistema robusto de gestión energética que permite administrar clientes, contratos, facturación, y monitoreo de consumo eléctrico. El proyecto está construido con arquitectura de microservicios para garantizar escalabilidad y mantenibilidad.
+Microservices Energy Platform es un sistema robusto de gestión energética desarrollado con Spring Boot que implementa arquitectura de microservicios para garantizar escalabilidad, mantenibilidad y alta disponibilidad. La plataforma gestiona de manera integral el ciclo completo de administración energética desde clientes hasta facturación.
 
-## 🏗️ Arquitectura de Microservicios
+## 🏛️ Arquitectura de Microservicios
 
-### 📊 Servicios Disponibles
+### Estructura de Servicios
 
-| Servicio | Puerto | Descripción |
-|----------|--------|-------------|
-| **cliente-service** | 8002 | Gestión de clientes y tipos de usuario |
-| **consumo-service** | 8003 | Monitoreo y análisis de consumo energético |
-| **contrato-service** | 8004 | Administración de contratos de energía |
-| **detalle-facturacion-service** | 8005 | Gestión de detalles de facturación |
-| **facturacion-service** | 8006 | Generación y procesamiento de facturas |
-| **medidor-service** | 8007 | Administración de medidores inteligentes |
-| **potencia-service** | 8008 | Gestión de potencia contratada |
-| **region-service** | 8009 | Administración de regiones de suministro |
+```
+🌐 Energy Platform Ecosystem
+├── 👥 cliente-service (8002)          # Gestión de clientes
+├── ⚡ consumo-service (8003)          # Monitoreo de consumo
+├── 📄 contrato-service (8004)         # Administración de contratos
+├── 🧾 facturacion-service (8006)      # Generación de facturas
+├── 📊 detalle-facturacion-service     # Detalles de facturación
+├── 🔌 medidor-service (8007)          # Control de medidores IoT
+├── 💪 potencia-service (8008)         # Gestión de potencia
+└── 📍 region-service (8009)           # Administración regional
+```
 
-## 🛠️ Stack Tecnológico
+### Clean Architecture Implementation
 
-### Backend
-- **Spring Boot 3.2.1** - Framework principal
+```
+📁 Cada Microservicio
+├── domain/                     # Capa de Dominio
+│   ├── entities/              # Entidades de negocio
+│   ├── valueobjects/          # Value Objects
+│   ├── repositories/          # Interfaces de repositorio
+│   └── exceptions/            # Excepciones de dominio
+├── application/               # Capa de Aplicación
+│   ├── usecases/             # Casos de uso
+│   ├── dto/                  # DTOs de aplicación
+│   └── services/             # Servicios de aplicación
+├── infrastructure/            # Capa de Infraestructura
+│   ├── persistence/          # Implementaciones JPA
+│   ├── web/                  # Controladores REST
+│   └── config/               # Configuraciones
+└── shared/                   # Componentes compartidos
+    ├── entities/             # Entidades base
+    ├── exceptions/           # Excepciones comunes
+    └── valueobjects/         # Value Objects compartidos
+```
+
+## 💻 Stack Tecnológico
+
+### Backend Core
+- **Spring Boot 3.3.4** - Framework principal
 - **Java 17** - Lenguaje de programación
-- **Maven** - Gestión de dependencias
+- **Maven** - Gestión de dependencias y build
 - **Spring Data JPA** - Persistencia de datos
 - **Spring Web** - APIs RESTful
 
-### Base de Datos
-- **H2 Database** (desarrollo)
-- **PostgreSQL** (producción recomendada)
-- **MySQL** (compatible)
+### Persistencia
+- **H2 Database** - Base de datos en memoria (desarrollo)
+- **PostgreSQL** - Base de datos principal (producción)
+- **JPA/Hibernate** - ORM y mapeo objeto-relacional
 
-### Herramientas
-- **Spring Boot DevTools** - Desarrollo rápido
+### Herramientas de Desarrollo
 - **Lombok** - Reducción de código boilerplate
-- **MapStruct** - Mapeo de objetos
+- **Spring Boot DevTools** - Desarrollo rápido con hot reload
+- **OpenAPI/Swagger** - Documentación de APIs
+- **Validation API** - Validaciones de entrada
 
-## 🚀 Instalación y Configuración
+### Testing
+- **JUnit 5** - Framework de testing
+- **Mockito** - Mock objects
+- **Spring Boot Test** - Testing de integración
+
+## 🚀 Instalación
 
 ### Prerrequisitos
-- Java 17 o superior
-- Maven 3.8 o superior
-- Git
 
-### Instalación
+- **Java 17** o superior
+- **Maven 3.8** o superior
+- **Git** para control de versiones
+
+### Pasos de Instalación
 
 ```bash
-# Clonar el repositorio
-git clone https://github.com/Yop007N/energy.git
-cd energy
+# 1. Clonar el repositorio
+git clone https://github.com/Yop007N/microservices-energy-platform.git
+cd microservices-energy-platform
 
-# Construir todos los microservicios
+# 2. Construir todos los microservicios
 mvn clean install
 
-# Ejecutar todos los servicios (en terminales separadas)
-./start-all-services.sh
+# 3. Ejecutar servicios individuales
+cd cliente-service && mvn spring-boot:run &
+cd consumo-service && mvn spring-boot:run &
+cd contrato-service && mvn spring-boot:run &
+cd facturacion-service && mvn spring-boot:run &
+# ... otros servicios
 ```
 
-### Ejecución Individual de Servicios
+### Ejecución con Docker
 
 ```bash
-# Cliente Service
-cd cliente-service && mvn spring-boot:run
+# Construir imágenes
+docker-compose build
 
-# Consumo Service
-cd consumo-service && mvn spring-boot:run
+# Ejecutar toda la plataforma
+docker-compose up -d
 
-# Otros servicios...
-cd [nombre-servicio] && mvn spring-boot:run
+# Ver logs
+docker-compose logs -f
 ```
 
-## 📡 API Endpoints
+## 📡 APIs y Endpoints
 
 ### 👥 Cliente Service (Puerto 8002)
 
-```http
-GET    /clientes           # Obtener todos los clientes
-GET    /clientes/{id}      # Obtener cliente por ID
-POST   /clientes           # Crear nuevo cliente
-PUT    /clientes/{id}      # Actualizar cliente
-DELETE /clientes/{id}      # Eliminar cliente
+```typescript
+// Gestión completa de clientes
+POST   /api/v1/clientes           # Crear cliente
+GET    /api/v1/clientes/{id}      # Obtener cliente
+PUT    /api/v1/clientes/{id}      # Actualizar cliente
+DELETE /api/v1/clientes/{id}      # Eliminar cliente
+GET    /api/v1/clientes/health    # Estado del servicio
 ```
 
-#### Ejemplo de Cliente
+#### Estructura Cliente
 ```json
 {
-  "rucCi": "12345678-9",
+  "id": "uuid",
+  "identificacion": "12345678-9",
   "nombre": "Juan Pérez",
-  "direccion": "Av. Principal 123",
-  "tipoCliente": "RESIDENCIAL"
+  "apellido": "González",
+  "tipoCliente": "RESIDENCIAL",
+  "contactoInfo": {
+    "telefono": "+595981234567",
+    "email": "juan.perez@email.com",
+    "direccion": "Av. Principal 123"
+  },
+  "estado": "ACTIVO"
 }
 ```
 
 ### ⚡ Consumo Service (Puerto 8003)
 
-```http
-GET    /consumos                    # Obtener consumos
-GET    /consumos/cliente/{id}       # Consumos por cliente
-POST   /consumos                    # Registrar consumo
-GET    /consumos/periodo/{periodo}  # Consumos por período
+```typescript
+GET    /api/v1/consumos                    # Listar consumos
+POST   /api/v1/consumos                    # Registrar consumo
+GET    /api/v1/consumos/cliente/{id}       # Consumos por cliente
+GET    /api/v1/consumos/periodo/{periodo}  # Consumos por período
+GET    /api/v1/consumos/analytics          # Analytics de consumo
 ```
 
-### 📋 Contrato Service (Puerto 8004)
+### 📄 Contrato Service (Puerto 8004)
 
-```http
-GET    /contratos              # Listar contratos
-POST   /contratos              # Crear contrato
-PUT    /contratos/{id}         # Actualizar contrato
-DELETE /contratos/{id}         # Cancelar contrato
+```typescript
+POST   /api/v1/contratos              # Crear contrato
+GET    /api/v1/contratos/{id}         # Obtener contrato
+PUT    /api/v1/contratos/{id}         # Actualizar contrato
+DELETE /api/v1/contratos/{id}         # Cancelar contrato
+GET    /api/v1/contratos/cliente/{id} # Contratos por cliente
 ```
 
-### 📊 Facturación Service (Puerto 8006)
+### 🧾 Facturación Service (Puerto 8006)
 
-```http
-GET    /facturas               # Obtener facturas
-POST   /facturas/generar       # Generar nueva factura
-GET    /facturas/cliente/{id}  # Facturas por cliente
-PUT    /facturas/{id}/pagar    # Marcar como pagada
+```typescript
+POST   /api/v1/facturas/generar       # Generar factura
+GET    /api/v1/facturas/{id}          # Obtener factura
+GET    /api/v1/facturas/cliente/{id}  # Facturas por cliente
+PUT    /api/v1/facturas/{id}/pagar    # Marcar como pagada
+GET    /api/v1/facturas/pendientes    # Facturas pendientes
 ```
 
-## 🔧 Configuración
+## ⚙️ Configuración
 
 ### Variables de Entorno
 
 ```bash
 # Base de datos
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=energy_db
-DB_USER=energy_user
-DB_PASSWORD=energy_pass
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/energy_db
+SPRING_DATASOURCE_USERNAME=energy_user
+SPRING_DATASOURCE_PASSWORD=energy_pass
 
-# Configuración de servicios
+# Configuración de microservicios
 SERVER_PORT=8002
-EUREKA_URL=http://localhost:8761
+EUREKA_CLIENT_SERVICE_URL=http://localhost:8761
+
+# Logging
+LOGGING_LEVEL_COM_ENERGIA=DEBUG
+LOGGING_PATTERN_FILE=%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
 ```
 
-### application.yml (Ejemplo)
+### application.yml Ejemplo
 
 ```yaml
 spring:
@@ -149,73 +197,101 @@ spring:
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
 server:
   port: 8002
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
 logging:
   level:
-    com.energy: DEBUG
+    com.energia: DEBUG
+    org.springframework.web: DEBUG
 ```
 
-## 🏗️ Estructura del Proyecto
+## 🎯 Casos de Uso Implementados
 
+### Flujo Principal del Sistema
+
+```typescript
+// 1. Registro de cliente
+const cliente = await clienteService.crearCliente({
+  identificacion: "12345678-9",
+  nombre: "Juan Pérez",
+  tipoCliente: "RESIDENCIAL"
+});
+
+// 2. Creación de contrato
+const contrato = await contratoService.crearContrato({
+  clienteId: cliente.id,
+  tipoContrato: "RESIDENCIAL",
+  potenciaContratada: 10.0
+});
+
+// 3. Instalación de medidor
+const medidor = await medidorService.instalarMedidor({
+  contratoId: contrato.id,
+  numeroSerie: "MED-001",
+  tipo: "INTELIGENTE"
+});
+
+// 4. Registro de consumo
+const consumo = await consumoService.registrarConsumo({
+  medidorId: medidor.id,
+  lecturaActual: 1500.5,
+  periodo: "2024-12"
+});
+
+// 5. Generación de factura
+const factura = await facturacionService.generarFactura({
+  clienteId: cliente.id,
+  consumoId: consumo.id,
+  periodo: "2024-12"
+});
 ```
-energy/
-├── cliente-service/
-│   ├── src/main/java/
-│   │   ├── controller/    # Controladores REST
-│   │   ├── service/       # Lógica de negocio
-│   │   ├── repository/    # Acceso a datos
-│   │   ├── model/         # Entidades JPA
-│   │   └── dto/           # Objetos de transferencia
-│   └── pom.xml
-├── consumo-service/
-├── contrato-service/
-├── facturacion-service/
-├── medidor-service/
-├── potencia-service/
-├── region-service/
-├── detalle-facturacion-service/
-└── pom.xml                # POM padre
-```
 
-## 🔄 Flujo de Trabajo
+### Casos de Uso por Microservicio
 
-1. **Registro de Cliente** → Cliente Service
-2. **Creación de Contrato** → Contrato Service
-3. **Instalación de Medidor** → Medidor Service
-4. **Registro de Consumo** → Consumo Service
-5. **Generación de Factura** → Facturación Service
-6. **Procesamiento de Pago** → Detalle Facturación Service
+#### Cliente Service
+- Crear/actualizar/eliminar clientes
+- Validar datos de contacto
+- Gestionar tipos de cliente
+- Manejar estados del cliente
 
-## 📊 Características Principales
+#### Consumo Service
+- Registrar lecturas de medidores
+- Calcular consumo por períodos
+- Generar reportes de consumo
+- Detectar anomalías en el consumo
 
-### ✨ Funcionalidades
-
-- **🏠 Gestión de Clientes**: CRUD completo con tipos de cliente
-- **📄 Contratos Inteligentes**: Administración automatizada de contratos
-- **⚡ Monitoreo en Tiempo Real**: Seguimiento de consumo energético
-- **🧾 Facturación Automática**: Generación y envío de facturas
-- **📍 Gestión Regional**: Administración por zonas geográficas
-- **🔌 Control de Medidores**: Gestión de dispositivos IoT
-- **💪 Análisis de Potencia**: Optimización de potencia contratada
-
-### 🎯 Ventajas del Sistema
-
-- **Escalabilidad**: Arquitectura de microservicios
-- **Mantenibilidad**: Separación clara de responsabilidades
-- **Flexibilidad**: Fácil integración de nuevos servicios
-- **Eficiencia**: Optimización de recursos energéticos
+#### Facturación Service
+- Generar facturas automáticas
+- Calcular tarifas según tipo de cliente
+- Procesar pagos
+- Enviar notificaciones de vencimiento
 
 ## 🧪 Testing
 
+### Ejecutar Tests
+
 ```bash
-# Ejecutar tests
+# Tests unitarios
 mvn test
 
 # Tests de integración
@@ -223,21 +299,86 @@ mvn integration-test
 
 # Cobertura de código
 mvn jacoco:report
+
+# Tests específicos por servicio
+cd cliente-service && mvn test
+```
+
+### Estructura de Testing
+
+```
+src/test/java/
+├── unit/                    # Tests unitarios
+│   ├── domain/             # Tests de entidades
+│   ├── application/        # Tests de casos de uso
+│   └── infrastructure/     # Tests de implementación
+├── integration/            # Tests de integración
+│   ├── web/               # Tests de controladores
+│   └── persistence/       # Tests de repositorios
+└── e2e/                   # Tests end-to-end
+```
+
+## 🔄 Ciclo de Vida del Desarrollo
+
+### Flujo de Trabajo
+
+1. **Desarrollo**: Implementación de nuevas features
+2. **Testing**: Ejecución de tests automatizados
+3. **Build**: Construcción con Maven
+4. **Deploy**: Despliegue en entornos
+5. **Monitor**: Monitoreo y métricas
+
+### Scripts de Automatización
+
+```bash
+# Script de inicio completo
+./scripts/start-all-services.sh
+
+# Script de despliegue
+./scripts/deploy.sh
+
+# Script de monitoreo
+./scripts/health-check.sh
+```
+
+## 📊 Monitoreo y Observabilidad
+
+### Métricas Disponibles
+
+- **Spring Boot Actuator** - Health checks y métricas
+- **Micrometer** - Métricas personalizadas
+- **Prometheus** - Recolección de métricas
+- **Grafana** - Dashboards de visualización
+
+### Endpoints de Monitoreo
+
+```
+GET /actuator/health          # Estado del servicio
+GET /actuator/metrics         # Métricas del sistema
+GET /actuator/info           # Información del servicio
+GET /actuator/prometheus     # Métricas para Prometheus
 ```
 
 ## 🌐 Despliegue
 
-### Docker (Recomendado)
+### Docker Compose
 
-```bash
-# Construir imágenes
-docker-compose build
+```yaml
+version: '3.8'
+services:
+  cliente-service:
+    build: ./cliente-service
+    ports:
+      - "8002:8002"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
-# Ejecutar todos los servicios
-docker-compose up -d
-
-# Ver logs
-docker-compose logs -f
+  consumo-service:
+    build: ./consumo-service
+    ports:
+      - "8003:8003"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 ```
 
 ### Kubernetes
@@ -247,40 +388,37 @@ docker-compose logs -f
 kubectl apply -f k8s/
 
 # Verificar deployments
-kubectl get pods
+kubectl get pods -n energy-platform
+
+# Ver logs
+kubectl logs -f deployment/cliente-service
 ```
 
-## 📈 Monitoreo
+## 📈 Métricas de Performance
 
-- **Spring Boot Actuator** - Health checks y métricas
-- **Prometheus** - Recolección de métricas
-- **Grafana** - Visualización de datos
-- **ELK Stack** - Logs centralizados
+### Indicadores Clave
 
-## 🤝 Contribución
+| Métrica | Objetivo | Actual |
+|---------|----------|--------|
+| **Response Time** | < 200ms | 150ms |
+| **Throughput** | > 1000 req/s | 1200 req/s |
+| **Error Rate** | < 1% | 0.5% |
+| **Availability** | > 99.9% | 99.95% |
 
-1. Fork el proyecto
-2. Crea tu branch (`git checkout -b feature/NuevaFuncionalidad`)
-3. Commit tus cambios (`git commit -m 'Add: Nueva funcionalidad'`)
-4. Push al branch (`git push origin feature/NuevaFuncionalidad`)
-5. Abre un Pull Request
+## 🔒 Seguridad
 
-## 📝 Licencia
+### Implementaciones de Seguridad
 
-Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
+- **Validación de entrada** en todos los endpoints
+- **Manejo de errores** sin exposición de información sensible
+- **Logging seguro** sin datos personales
+- **Encriptación** de datos sensibles
 
 ## 👨‍💻 Autor
 
-**Enrique B. (Yop007N)**
-- GitHub: [@Yop007N](https://github.com/Yop007N)
-- Especialización: IoT y Eficiencia Energética
-
-## 🔗 Enlaces Relacionados
-
-- [Spring Boot Documentation](https://spring.io/projects/spring-boot)
-- [Java 17 Documentation](https://docs.oracle.com/en/java/javase/17/)
-- [Maven Documentation](https://maven.apache.org/guides/)
+**Enrique Bobadilla**
 
 ---
 
-⚡ Construyendo el futuro de la gestión energética inteligente
+**Versión:** 1.0.0
+**Última actualización:** Diciembre 2024
